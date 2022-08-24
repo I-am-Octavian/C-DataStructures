@@ -110,9 +110,14 @@ void deleteAll(int theElement)
 
 void clear()
 {
-    free(List);
-    List = NULL;
-    start = NULL;
+    while(start != NULL)
+    {
+        Node *tmp = start->next;
+        free(start);
+        start = tmp;
+    }
+    // No need to free List* seperately as we have freed that address
+    // NOTE: We free addresses, NOT pointers
 }
 
 int main(void)
