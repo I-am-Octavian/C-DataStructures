@@ -3,7 +3,7 @@
 #include <stdlib.h>
 #include <stdbool.h>
 
-typedef struct
+typedef struct Node
 {
     int element;
     struct Node *next;
@@ -47,6 +47,15 @@ void display()
         LinkedList = (Node *)LinkedList->next;
     }
     printf("%d\n", LinkedList->element);
+}
+
+void displayUsingFor()
+{
+    for(Node *tmp = start; tmp != NULL; tmp = tmp->next)
+    {
+        printf("%d ", tmp->element);
+    }
+    printf("\n");
 }
 
 // Returns address of Node if element is found
@@ -123,4 +132,6 @@ int main(void)
     
     createList(10);
     display();
+    
+    displayUsingFor();
 }
