@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
+#include <stdbool.h>
 
 struct treeNode
 {
@@ -12,7 +13,8 @@ struct treeNode
 typedef struct treeNode TreeNode;
 typedef TreeNode *TreeNodePtr;
 
-void searchNode(TreeNodePtr *treePtr, int key);
+bool search(TreeNodePtr treePtr, int value);
+void searchParent(TreeNodePtr *treePtr, int key);
 void insertNode(TreeNodePtr *treePtr, int value);
 void inOrder(TreeNodePtr treePtr);
 void preOrder(TreeNodePtr treePtr);
@@ -42,9 +44,40 @@ int main(void)
     postOrder(rootPtr);
 
     int elementToFind;
+    
     printf("\n\nEnter element to search in the tree: ");
     scanf("%d", &elementToFind);
-    searchParent(&rootPtr, elementToFind);
+
+    if(search(rootPtr, elementToFind))
+    {
+        puts("Element exists in the tree");
+        searchParent(&rootPtr, elementToFind);
+    }
+    else
+    {
+        puts("Element does not exist in the tree");
+    }
+
+}
+
+bool search(TreeNodePtr treePtr, int value)
+{
+    if(treePtr == NULL)
+    {
+        return false;
+    }
+    else if(value < treePtr->data)
+    {
+        return search(treePtr->leftPtr, value);
+    }
+    else if(value > treePtr->data)
+    {
+        return search(treePtr->rightPtr, value);
+    }
+    else
+    {
+        return true;
+    }
 }
 
 void searchParent(TreeNodePtr *treePtr, int key)
@@ -96,7 +129,7 @@ void searchParent(TreeNodePtr *treePtr, int key)
         }
     }
 
-    printf("Element not found in the tree\n");
+    // printf("Element not found in the tree\n");
 }
 
 void insertNode(TreeNodePtr *treePtr, int value)
